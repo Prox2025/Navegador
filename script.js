@@ -18,13 +18,13 @@ const puppeteer = require('puppeteer');
     console.log(`🌐 Acessando: ${url}`);
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
 
-    // Aguarda até o iframe ser inserido (tempo máximo: 15 segundos)
-    console.log("⏳ Aguardando a inserção do iframe do vídeo...");
-    await page.waitForSelector('iframe#liveFrame', { timeout: 15000 });
+    // Espera fixamente alguns segundos para o JS da página rodar
+    console.log("⏳ Aguardando 5 segundos para carregar todo o conteúdo dinâmico...");
+    await page.waitForTimeout(8000);
 
-    // Captura o HTML depois que o vídeo foi carregado
+    // Captura o HTML completo
     const htmlFinal = await page.content();
-    console.log("✅ HTML FINAL (com vídeo):\n");
+    console.log("✅ HTML FINAL (com vídeo carregado):\n");
     console.log(htmlFinal);
 
     await browser.close();

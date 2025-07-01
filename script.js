@@ -18,13 +18,18 @@ const puppeteer = require('puppeteer');
     console.log(`🌐 Acessando: ${url}`);
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
 
-    const html = await page.content();
-    console.log("📄 HTML da página:\n");
-    console.log(html);
+    // Aguarda até o iframe ser inserido (tempo máximo: 15 segundos)
+    console.log("⏳ Aguardando a inserção do iframe do vídeo...");
+    await page.waitForSelector('iframe#liveFrame', { timeout: 15000 });
+
+    // Captura o HTML depois que o vídeo foi carregado
+    const htmlFinal = await page.content();
+    console.log("✅ HTML FINAL (com vídeo):\n");
+    console.log(htmlFinal);
 
     await browser.close();
   } catch (error) {
-    console.error("⚠️ Erro ao executar Puppeteer:", error);
+    console.error("⚠️ Erro ao executar Puppeteer:", error.message);
     process.exit(1);
   }
 })();

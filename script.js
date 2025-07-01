@@ -18,9 +18,9 @@ const puppeteer = require('puppeteer');
     console.log(`🌐 Acessando: ${url}`);
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
 
-    // Espera fixamente alguns segundos para o JS da página rodar
+    // Espera fixa usando Promise + setTimeout (compatível com todas versões)
     console.log("⏳ Aguardando 5 segundos para carregar todo o conteúdo dinâmico...");
-    await page.waitForTimeout(8000);
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
     // Captura o HTML completo
     const htmlFinal = await page.content();
